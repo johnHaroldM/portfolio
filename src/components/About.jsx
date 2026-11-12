@@ -1,5 +1,5 @@
-import { profile, capabilities, experience, education, hasScreens } from '../content.js'
-import { Emphasis, Reveal, SectionHeading, container } from './ui.jsx'
+import { profile, capabilities, experience, education, hasScreens, projects } from '../content.js'
+import { Reveal, ScrollWords, SectionHeading, container } from './ui.jsx'
 
 const pad = (n) => String(n).padStart(2, '0')
 
@@ -17,6 +17,48 @@ const stages = [
   ['Deploy', 'Self-hosted runner, Nginx'],
   ['Monitor', 'Grafana and alerts'],
 ]
+
+const toolbox = capabilities.map((c) => ({ group: c.title, tools: c.tools }))
+const extras = [...new Set(projects.flatMap((p) => p.tags ?? []))].filter(
+  (t) => t !== 'Freelance' && !capabilities.some((c) => c.tools.includes(t)),
+)
+if (extras.length) toolbox.push({ group: 'Also in the mix', tools: extras })
+
+/** Every tool named on the page, as a grid of tiles grouped by area. */
+function Toolbox() {
+  let n = 0
+  return (
+    <div className="mt-20 lg:mt-28">
+      <Reveal className="flex items-baseline justify-between gap-4">
+        <h3 className="font-mono text-[12px] tracking-[0.14em] text-muted uppercase">Toolbox</h3>
+        <span className="font-mono text-[11px] tracking-[0.1em] text-muted uppercase">
+          {toolbox.reduce((sum, g) => sum + g.tools.length, 0)} tools
+        </span>
+      </Reveal>
+      <div className="mt-6 grid grid-cols-1 gap-x-10 gap-y-9 border-t border-line pt-8 lg:grid-cols-2">
+        {toolbox.map((g) => (
+          <div key={g.group}>
+            <Reveal as="p" className="mb-3 text-[15px] font-semibold tracking-[-0.01em]">
+              {g.group}
+            </Reveal>
+            <ul className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+              {g.tools.map((tool, i) => (
+                <Reveal as="li" key={tool} delay={i * 60}>
+                  <div className="group flex h-[5.25rem] flex-col justify-between rounded-xl border border-line p-3 transition-[background-color,border-color,color,translate] duration-300 ease-out-expo hover:-translate-y-1 hover:border-ink hover:bg-ink hover:text-bg">
+                    <span className="font-mono text-[10.5px] text-accent-text transition-colors group-hover:text-accent">
+                      {pad(++n)}
+                    </span>
+                    <span className="text-[14px] leading-tight font-semibold tracking-[-0.01em]">{tool}</span>
+                  </div>
+                </Reveal>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
 
 /** The path a change takes to production, with a dot running the line. */
 function Pipeline() {
@@ -76,15 +118,13 @@ function Timeline({ title, items, className = '' }) {
 
 export function About() {
   return (
-    <section id="about" aria-labelledby="about-title" className={`${container} scroll-mt-6 py-16 lg:py-28`}>
+    <section id="about" aria-labelledby="about-title" className={`${container} scroll-mt-24 py-16 lg:py-28`}>
       <SectionHeading id="about-title" index={hasScreens ? '03' : '02'} title="About" />
 
-      <Reveal
-        as="p"
+      <ScrollWords
+        text={profile.statement}
         className="mt-10 max-w-[24ch] text-[clamp(1.75rem,4.6vw,3.6rem)] leading-[1.06] font-medium tracking-[-0.03em] text-balance lg:mt-16"
-      >
-        <Emphasis text={profile.statement} />
-      </Reveal>
+      />
 
       <Pipeline />
 
@@ -122,6 +162,8 @@ export function About() {
           {education?.length > 0 && <Timeline title="Education" items={education} className="mt-14" />}
         </div>
       </div>
+
+      <Toolbox />
     </section>
   )
 }

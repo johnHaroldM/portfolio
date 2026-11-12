@@ -188,3 +188,110 @@ export function Emphasis({ text, className = 'not-italic text-accent-text' }) {
 }
 
 export const container = 'mx-auto w-full max-w-[1400px] px-5 sm:px-8 lg:px-12'
+
+/** Lights a statement up word by word as it scrolls through the viewport. *Asterisk* words take the accent. */
+export function ScrollWords({ text, className = '' }) {
+  const ref = useRef(null)
+  const [progress, setProgress] = useState(1)
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    let frame = 0
+    const update = () => {
+      frame = 0
+      const el = ref.current
+      if (!el) return
+      const r = el.getBoundingClientRect()
+      const vh = window.innerHeight
+      setProgress(Math.max(0, Math.min(1, (vh * 0.92 - r.top) / (vh * 0.5 + r.height * 0.4))))
+    }
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update)
+    }
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      cancelAnimationFrame(frame)
+    }
+  }, [])
+
+  const tokens = []
+  text.split(/(\*[^*]+\*)/g).forEach((part) => {
+    const em = part.startsWith('*') && part.endsWith('*')
+    ;(em ? part.slice(1, -1) : part)
+      .split(/\s+/)
+      .filter(Boolean)
+      .forEach((word) => tokens.push({ word, em }))
+  })
+
+  return (
+    <p ref={ref} className={className}>
+      <span className="sr-only">{text.replace(/\*/g, '')}</span>
+      <span aria-hidden>
+        {tokens.map((t, i) => (
+          <span
+            key={i}
+            className={`transition-opacity duration-500 ${t.em ? 'text-accent-text' : ''}`}
+            style={{ opacity: i / tokens.length < progress ? 1 : 0.14 }}
+          >
+            {t.word}{' '}
+          </span>
+        ))}
+      </span>
+    </p>
+  )
+}
+
+/** Accent ring that trails the mouse and swells over links and buttons. Mouse-only. */
+export function Cursor() {
+  const ref = useRef(null)
+  useEffect(() => {
+    const el = ref.current
+    const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (!el || !fine || reduced) return
+    let x = 0
+    let y = 0
+    let tx = 0
+    let ty = 0
+    let frame = 0
+    let seen = false
+    const onMove = (e) => {
+      tx = e.clientX
+      ty = e.clientY
+      if (!seen) {
+        seen = true
+        x = tx
+        y = ty
+        el.dataset.on = 'true'
+      }
+      el.dataset.hot = e.target instanceof Element && e.target.closest('a, button') ? 'true' : 'false'
+    }
+    const onLeave = () => {
+      seen = false
+      el.dataset.on = 'false'
+    }
+    const loop = () => {
+      x += (tx - x) * 0.2
+      y += (ty - y) * 0.2
+      el.style.transform = `translate3d(${x}px, ${y}px, 0)`
+      frame = requestAnimationFrame(loop)
+    }
+    frame = requestAnimationFrame(loop)
+    window.addEventListener('pointermove', onMove, { passive: true })
+    document.documentElement.addEventListener('pointerleave', onLeave)
+    return () => {
+      cancelAnimationFrame(frame)
+      window.removeEventListener('pointermove', onMove)
+      document.documentElement.removeEventListener('pointerleave', onLeave)
+    }
+  }, [])
+  return (
+    <div ref={ref} aria-hidden className="cursor-ring">
+      <span />
+    </div>
+  )
+}

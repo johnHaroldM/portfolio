@@ -58,7 +58,7 @@ function CropMarks() {
 /** Slow orbit rings and a breathing accent glow behind the card. */
 function StageBackdrop() {
   return (
-    <div aria-hidden className="pointer-events-none absolute inset-0 grid place-items-center overflow-hidden">
+    <div aria-hidden className="parallax pointer-events-none absolute inset-0 grid place-items-center overflow-hidden [--depth:-18px]">
       <span className="glow absolute aspect-square w-[62%] rounded-full bg-accent blur-[90px]" />
       <svg viewBox="0 0 400 400" className="h-[112%] max-w-none text-muted/35" fill="none" stroke="currentColor">
         <circle className="orbit" cx="200" cy="200" r="196" strokeWidth="0.6" strokeDasharray="2 9" />
@@ -165,6 +165,29 @@ function Badge() {
   )
 }
 
+const chipSpots = [
+  'top-[15%] right-[4%] [--depth:26px]',
+  'top-[27%] left-[2%] hidden sm:block [--depth:-22px]',
+  'right-[12%] bottom-[19%] hidden sm:block [--depth:34px]',
+  'top-[5%] left-[36%] hidden lg:block [--depth:-30px]',
+]
+
+/** Tool labels that hover around the card and drift with the pointer. */
+function FloatChips() {
+  const picks = ['Laravel', 'React', 'Grafana', 'GitHub Actions'].filter((t) => tools.includes(t))
+  return picks.map((label, i) => (
+    <span key={label} aria-hidden className={`parallax pointer-events-none absolute z-10 ${chipSpots[i]}`}>
+      <span
+        className="bob flex items-center gap-2 rounded-full border border-line bg-bg/85 px-3 py-1.5 font-mono text-[10.5px] tracking-[0.08em] text-ink uppercase shadow-[0_12px_24px_-16px_rgba(25,27,34,0.5)] backdrop-blur-sm sm:text-[11px]"
+        style={{ animationDelay: `${i * -1.3}s` }}
+      >
+        <span className="size-1.5 rounded-full bg-accent" />
+        {label}
+      </span>
+    </span>
+  ))
+}
+
 function CardStage() {
   const [webgl] = useState(hasWebGL)
   const [ready, setReady] = useState(false)
@@ -172,7 +195,20 @@ function CardStage() {
   const [stageRef, onScreen] = useInView()
 
   return (
-    <div className="fade-in" style={{ animationDelay: '150ms' }}>
+    <div
+      className="fade-in"
+      style={{ animationDelay: '150ms' }}
+      onPointerMove={(e) => {
+        if (e.pointerType !== 'mouse') return
+        const r = e.currentTarget.getBoundingClientRect()
+        e.currentTarget.style.setProperty('--px', ((e.clientX - r.left) / r.width - 0.5).toFixed(3))
+        e.currentTarget.style.setProperty('--py', ((e.clientY - r.top) / r.height - 0.5).toFixed(3))
+      }}
+      onPointerLeave={(e) => {
+        e.currentTarget.style.setProperty('--px', 0)
+        e.currentTarget.style.setProperty('--py', 0)
+      }}
+    >
       <div
         ref={stageRef}
         className="relative h-[clamp(260px,44svh,420px)] w-full sm:h-[clamp(320px,52svh,520px)] lg:h-[clamp(420px,70svh,700px)]"
@@ -180,6 +216,7 @@ function CardStage() {
         <StageBackdrop />
         <CropMarks />
         <Badge />
+        <FloatChips />
         <FlatCard hidden={ready} />
         {webgl && (
           <SceneBoundary>

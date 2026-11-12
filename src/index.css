@@ -361,3 +361,63 @@ body::after {
     transition: none;
   }
 }
+/* ── Interactive layer ────────────────────────────────────── */
+
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 80;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.cursor-ring[data-on="true"] {
+  opacity: 1;
+}
+
+.cursor-ring span {
+  display: block;
+  width: 34px;
+  height: 34px;
+  margin: -17px 0 0 -17px;
+  border: 1.5px solid var(--accent);
+  border-radius: 50%;
+  transition:
+    transform 0.4s var(--ease-expo),
+    background-color 0.4s;
+}
+
+.cursor-ring[data-hot="true"] span {
+  transform: scale(1.75);
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+@keyframes bob {
+  from {
+    transform: translateY(5px);
+  }
+  to {
+    transform: translateY(-7px);
+  }
+}
+
+.bob {
+  animation: bob 4.5s ease-in-out infinite alternate;
+}
+
+/* Elements inside a stage drift against the pointer; --depth sets how far. */
+.parallax {
+  transform: translate3d(calc(var(--px, 0) * var(--depth, 16px)), calc(var(--py, 0) * var(--depth, 16px)), 0);
+  transition: transform 0.9s var(--ease-expo);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bob {
+    animation: none;
+  }
+  .parallax {
+    transform: none;
+  }
+}

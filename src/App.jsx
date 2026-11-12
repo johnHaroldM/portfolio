@@ -6,7 +6,7 @@ import { Hero } from './components/Hero.jsx'
 import { MobileDock } from './components/MobileDock.jsx'
 import { Screens } from './components/Screens.jsx'
 import { Work } from './components/Work.jsx'
-import { ScrollProgress } from './components/ui.jsx'
+import { Cursor, ScrollProgress } from './components/ui.jsx'
 
 export default function App() {
   return (
@@ -18,6 +18,7 @@ export default function App() {
         Skip to work
       </a>
       <ScrollProgress />
+      <Cursor />
       <Header />
       <main>
         <Hero />

@@ -37,13 +37,25 @@ export function Contact() {
       aria-labelledby="contact-title"
       className="relative overflow-hidden bg-accent text-on-accent selection:bg-on-accent selection:text-accent"
     >
+      <svg
+        aria-hidden
+        viewBox="0 0 400 400"
+        fill="none"
+        stroke="currentColor"
+        className="pointer-events-none absolute -top-[18%] -right-[14%] w-[min(92vw,760px)] opacity-25"
+      >
+        <circle className="orbit" cx="200" cy="200" r="196" strokeWidth="0.7" strokeDasharray="3 10" />
+        <circle className="orbit orbit-reverse" cx="200" cy="200" r="150" strokeWidth="0.7" strokeDasharray="34 12" />
+        <circle cx="200" cy="200" r="104" strokeWidth="0.7" />
+        <circle className="orbit" cx="200" cy="200" r="58" strokeWidth="0.7" strokeDasharray="2 8" />
+      </svg>
       <Marquee
         duration={36}
         className="border-b border-on-accent/25 py-4 font-mono text-[12px] tracking-[0.16em] uppercase"
         items={[profile.availability?.long ?? 'Get in touch', 'Web apps', 'CI/CD', 'Servers & monitoring', profile.location]}
         separator="✦"
       />
-      <div className={`${container} pt-16 pb-8 lg:pt-28`}>
+      <div className={`${container} relative pt-16 pb-8 lg:pt-28`}>
         <Reveal as="p" className="font-mono text-[12px] tracking-[0.14em] uppercase opacity-80">
           ({hasScreens ? '04' : '03'}) Contact
         </Reveal>

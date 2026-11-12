@@ -1,5 +1,6 @@
 import { projects } from '../content.js'
 import { ArrowRight } from './Icons.jsx'
+import { Spotlight } from './Spotlight.jsx'
 import { Reveal, SectionHeading, container } from './ui.jsx'
 
 const pad = (n) => String(n).padStart(2, '0')
@@ -40,7 +41,7 @@ function ProjectRow({ project, index }) {
     <Reveal as="li" delay={Math.min(index, 4) * 60} className="border-t border-line">
       <Wrapper
         {...linkProps}
-        className="group relative grid after:absolute after:inset-x-0 after:-top-px after:h-px after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-700 after:ease-out-expo after:content-[''] hover:after:scale-x-100 grid-cols-[2rem_1fr_auto] items-start gap-x-3 py-7 sm:grid-cols-[3.5rem_1fr_auto] sm:py-9 lg:grid-cols-[4.5rem_minmax(0,1.1fr)_minmax(0,1fr)_12.5rem_3.5rem] lg:items-center lg:gap-x-8 lg:py-10"
+        className="group relative isolate grid before:absolute before:-inset-x-3 before:inset-y-0 before:-z-10 before:origin-bottom before:scale-y-0 before:rounded-2xl before:bg-surface before:transition-transform before:duration-500 before:ease-out-expo before:content-[''] hover:before:scale-y-100 sm:before:-inset-x-5 after:absolute after:inset-x-0 after:-top-px after:h-px after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-700 after:ease-out-expo after:content-[''] hover:after:scale-x-100 grid-cols-[2rem_1fr_auto] items-start gap-x-3 py-7 sm:grid-cols-[3.5rem_1fr_auto] sm:py-9 lg:grid-cols-[4.5rem_minmax(0,1.1fr)_minmax(0,1fr)_12.5rem_3.5rem] lg:items-center lg:gap-x-8 lg:py-10"
       >
         <span className="col-start-1 row-start-1 pt-[0.55em] font-mono text-[12px] text-muted lg:pt-0">
           {pad(index + 1)}
@@ -92,14 +93,15 @@ function ProjectRow({ project, index }) {
 
 export function Work() {
   return (
-    <section id="work" aria-labelledby="work-title" className={`${container} scroll-mt-6 py-16 lg:py-28`}>
+    <section id="work" aria-labelledby="work-title" className={`${container} scroll-mt-24 py-16 lg:py-28`}>
       <SectionHeading
         id="work-title"
         index="01"
         title="Selected work"
         meta={`${projects.length} projects · ${projects.at(-1)?.year}–${projects[0]?.year}`}
       />
-      <ol className="mt-10 border-b border-line lg:mt-16">
+      <Spotlight />
+      <ol className="mt-12 border-b border-line lg:mt-20">
         {projects.map((p, i) => (
           <ProjectRow key={p.title} project={p} index={i} />
         ))}

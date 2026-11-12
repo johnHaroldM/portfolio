@@ -122,7 +122,7 @@ function ScreensSection() {
   const slide = screens[active]
 
   return (
-    <section id="screens" aria-labelledby="screens-title" className={`${container} scroll-mt-6 py-16 lg:py-28`}>
+    <section id="screens" aria-labelledby="screens-title" className={`${container} scroll-mt-24 py-16 lg:py-28`}>
       <SectionHeading
         id="screens-title"
         index="02"
