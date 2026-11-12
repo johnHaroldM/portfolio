@@ -1,28 +1,9 @@
-import { useEffect, useState } from 'react'
 import { profile, fullName, hasScreens } from '../content.js'
-import { copyText, useFlash } from '../lib/hooks.js'
+import { copyText, useFlash, useLocalTime } from '../lib/hooks.js'
 import { downloadVCard } from '../lib/vcard.js'
 import { telHref } from './ContactActions.jsx'
 import { ArrowRight, ArrowUp, Check, ContactAdd, Copy, Share } from './Icons.jsx'
-import { Reveal, container } from './ui.jsx'
-
-function useLocalTime(timeZone) {
-  const format = () => {
-    try {
-      return new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', timeZone }).format(new Date())
-    } catch {
-      return null
-    }
-  }
-  const [time, setTime] = useState(() => (timeZone ? format() : null))
-  useEffect(() => {
-    if (!timeZone) return
-    const id = setInterval(() => setTime(format()), 30_000)
-    return () => clearInterval(id)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timeZone])
-  return time
-}
+import { Marquee, Reveal, container } from './ui.jsx'
 
 const chip =
   'inline-flex h-11 items-center gap-2 rounded-full border border-on-accent/30 px-4 text-[14px] font-medium transition-[background-color,border-color,color,transform] duration-300 ease-out-expo hover:border-on-accent hover:bg-on-accent hover:text-accent active:scale-[0.97]'
@@ -56,6 +37,12 @@ export function Contact() {
       aria-labelledby="contact-title"
       className="relative overflow-hidden bg-accent text-on-accent selection:bg-on-accent selection:text-accent"
     >
+      <Marquee
+        duration={36}
+        className="border-b border-on-accent/25 py-4 font-mono text-[12px] tracking-[0.16em] uppercase"
+        items={[profile.availability?.long ?? 'Get in touch', 'Web apps', 'CI/CD', 'Servers & monitoring', profile.location]}
+        separator="✦"
+      />
       <div className={`${container} pt-16 pb-8 lg:pt-28`}>
         <Reveal as="p" className="font-mono text-[12px] tracking-[0.14em] uppercase opacity-80">
           ({hasScreens ? '04' : '03'}) Contact

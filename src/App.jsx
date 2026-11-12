@@ -1,10 +1,12 @@
 import { About } from './components/About.jsx'
+import { Band } from './components/Band.jsx'
 import { Contact } from './components/Contact.jsx'
 import { Header } from './components/Header.jsx'
 import { Hero } from './components/Hero.jsx'
 import { MobileDock } from './components/MobileDock.jsx'
 import { Screens } from './components/Screens.jsx'
 import { Work } from './components/Work.jsx'
+import { ScrollProgress } from './components/ui.jsx'
 
 export default function App() {
   return (
@@ -15,9 +17,11 @@ export default function App() {
       >
         Skip to work
       </a>
+      <ScrollProgress />
       <Header />
       <main>
         <Hero />
+        <Band />
         <Work />
         <Screens />
         <About />

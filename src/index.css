@@ -161,3 +161,203 @@ body::after {
 .card-canvas canvas {
   touch-action: pan-y;
 }
+
+/* ── Bolder elements ──────────────────────────────────────── */
+
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--stroke, var(--ink));
+}
+
+.marquee-plain {
+  mask-image: none;
+}
+
+.marquee-reverse .marquee-track {
+  animation-direction: reverse;
+}
+
+.spin {
+  animation: spin-slow 22s linear infinite;
+}
+
+/* Deploy pipeline: a dot runs the line and each stage lights as it passes. */
+@keyframes travel {
+  from {
+    left: 0;
+  }
+  to {
+    left: 100%;
+  }
+}
+
+@keyframes node-pulse {
+  0% {
+    background: var(--accent);
+    border-color: var(--accent);
+    transform: scale(1.35);
+  }
+  18%,
+  100% {
+    background: var(--bg);
+    border-color: var(--ink);
+    transform: none;
+  }
+}
+
+.pipe-dot {
+  animation: travel 7s linear infinite;
+}
+
+.pipe-node {
+  animation: node-pulse 7s linear infinite both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spin,
+  .pipe-node {
+    animation: none;
+  }
+  .pipe-dot {
+    display: none;
+  }
+}
+
+/* ── Hero & detail motion ─────────────────────────────────── */
+
+@keyframes char-rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.55em) rotate(6deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.char {
+  display: inline-block;
+  transform-origin: 0 100%;
+  animation: char-rise 1s var(--ease-expo) both;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee {
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee var(--marquee-duration, 40s) linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 0.16;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(1.06);
+  }
+}
+
+.orbit {
+  transform-origin: 50% 50%;
+  transform-box: fill-box;
+  animation: spin-slow 80s linear infinite;
+}
+
+.orbit-reverse {
+  animation-duration: 120s;
+  animation-direction: reverse;
+}
+
+.glow {
+  animation: breathe 9s ease-in-out infinite;
+}
+
+@keyframes scroll-cue {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  45% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  55% {
+    transform: scaleY(1);
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
+
+.scroll-cue {
+  animation: scroll-cue 2.4s var(--ease-expo) infinite;
+}
+
+/* A rule that draws itself when its .reveal parent comes into view. */
+.draw {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.4s var(--ease-expo) 0.15s;
+}
+
+.reveal[data-shown="true"] .draw {
+  transform: none;
+}
+
+.scroll-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 65;
+  height: 3px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .char,
+  .marquee-track,
+  .orbit,
+  .glow,
+  .scroll-cue {
+    animation: none;
+  }
+  .marquee-track {
+    flex-wrap: wrap;
+    width: auto;
+  }
+  .marquee-track > [aria-hidden="true"] {
+    display: none;
+  }
+  .draw {
+    transform: none;
+    transition: none;
+  }
+}

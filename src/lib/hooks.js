@@ -59,3 +59,22 @@ export async function copyText(text) {
     return ok
   }
 }
+
+/** "14:05"-style clock for a time zone, refreshed twice a minute. */
+export function useLocalTime(timeZone) {
+  const format = () => {
+    try {
+      return new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', timeZone }).format(new Date())
+    } catch {
+      return null
+    }
+  }
+  const [time, setTime] = useState(() => (timeZone ? format() : null))
+  useEffect(() => {
+    if (!timeZone) return
+    const id = setInterval(() => setTime(format()), 30_000)
+    return () => clearInterval(id)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timeZone])
+  return time
+}

@@ -43,7 +43,7 @@ export function Header() {
           <a
             key={l.href}
             href={l.href}
-            className="font-mono text-[12px] uppercase tracking-[0.14em] text-muted transition-colors hover:text-ink"
+            className="relative py-1 font-mono text-[12px] uppercase tracking-[0.14em] text-muted transition-colors after:absolute after:inset-x-0 after:bottom-0 after:h-px after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-500 after:ease-out-expo after:content-[''] hover:text-ink hover:after:scale-x-100"
           >
             {l.label}
           </a>

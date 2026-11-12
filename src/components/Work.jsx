@@ -4,6 +4,34 @@ import { Reveal, SectionHeading, container } from './ui.jsx'
 
 const pad = (n) => String(n).padStart(2, '0')
 
+/** First screenshot of the project in a small browser frame; a numbered tile when there is none. */
+function Thumb({ project, index }) {
+  const first = project.screens?.[0]
+  const src = typeof first === 'string' ? first : first?.src
+  return (
+    <div
+      aria-hidden
+      className="overflow-hidden rounded-[9px] bg-surface shadow-[0_18px_36px_-22px_rgba(25,27,34,0.55)] ring-1 ring-line transition-transform duration-700 ease-out-expo group-hover:scale-[1.05] group-hover:rotate-0 lg:-rotate-2"
+    >
+      <span className="flex h-4 items-center gap-1 border-b border-line bg-surface px-2">
+        <span className="size-1.5 rounded-full bg-accent" />
+        <span className="size-1.5 rounded-full bg-line" />
+        <span className="size-1.5 rounded-full bg-line" />
+      </span>
+      {src ? (
+        <img src={src} alt="" loading="lazy" decoding="async" className="aspect-[16/10] w-full object-cover object-top" />
+      ) : (
+        <span className="relative grid aspect-[16/10] w-full place-items-center overflow-hidden bg-ink text-bg">
+          <span className="absolute inset-0 opacity-25 [background-image:linear-gradient(var(--bg)_1px,transparent_1px),linear-gradient(90deg,var(--bg)_1px,transparent_1px)] [background-size:18px_18px]" />
+          <span className="text-outline relative text-[3.2rem] leading-none font-bold tracking-[-0.05em] [--stroke:var(--accent)]">
+            {pad(index + 1)}
+          </span>
+        </span>
+      )}
+    </div>
+  )
+}
+
 function ProjectRow({ project, index }) {
   const Wrapper = project.url ? 'a' : 'div'
   const linkProps = project.url ? { href: project.url, target: '_blank', rel: 'noreferrer' } : {}
@@ -12,7 +40,7 @@ function ProjectRow({ project, index }) {
     <Reveal as="li" delay={Math.min(index, 4) * 60} className="border-t border-line">
       <Wrapper
         {...linkProps}
-        className="group grid grid-cols-[2rem_1fr_auto] items-start gap-x-3 py-7 sm:grid-cols-[3.5rem_1fr_auto] sm:py-9 lg:grid-cols-[4.5rem_minmax(0,1.15fr)_minmax(0,1fr)_auto] lg:items-center lg:gap-x-8 lg:py-10"
+        className="group relative grid after:absolute after:inset-x-0 after:-top-px after:h-px after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-700 after:ease-out-expo after:content-[''] hover:after:scale-x-100 grid-cols-[2rem_1fr_auto] items-start gap-x-3 py-7 sm:grid-cols-[3.5rem_1fr_auto] sm:py-9 lg:grid-cols-[4.5rem_minmax(0,1.1fr)_minmax(0,1fr)_12.5rem_3.5rem] lg:items-center lg:gap-x-8 lg:py-10"
       >
         <span className="col-start-1 row-start-1 pt-[0.55em] font-mono text-[12px] text-muted lg:pt-0">
           {pad(index + 1)}
@@ -45,10 +73,14 @@ function ProjectRow({ project, index }) {
           )}
         </div>
 
+        <div className="col-span-2 col-start-2 row-start-3 mt-6 max-w-[22rem] lg:col-span-1 lg:col-start-4 lg:row-start-1 lg:mt-0 lg:max-w-none">
+          <Thumb project={project} index={index} />
+        </div>
+
         {project.url && (
           <span
             aria-hidden
-            className="col-start-3 row-start-1 mt-1 grid size-11 place-items-center rounded-full border border-line transition-[background-color,border-color,color] duration-500 ease-out-expo group-hover:border-accent group-hover:bg-accent group-hover:text-on-accent lg:col-start-4 lg:mt-0 lg:size-14"
+            className="col-start-3 row-start-1 mt-1 grid size-11 place-items-center rounded-full border border-line transition-[background-color,border-color,color] duration-500 ease-out-expo group-hover:border-accent group-hover:bg-accent group-hover:text-on-accent lg:col-start-5 lg:mt-0 lg:size-14"
           >
             <ArrowRight className="-rotate-45 transition-transform duration-500 ease-out-expo group-hover:rotate-0" />
           </span>
