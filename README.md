@@ -15,6 +15,15 @@ Designed phone-first, because most visitors arrive by scanning the QR code on yo
 Everything lives in **`src/content.js`**: name, role, email, phone, website, projects, skills, experience,
 social links. The 3D card, page title, favicon and contact file are all generated from it.
 
+## Screenshots (3D "Screens" section)
+
+1. Put images in `public/screens/` (WebP or PNG, about 1600 px wide; blur names, IPs and real data first).
+2. List them on the project in `src/content.js`:
+   `screens: ['screens/asad-portal-1.webp', { src: 'screens/asad-portal-2.webp', caption: 'Report form' }]`
+
+The section and its nav link appear once any project has a screenshot. Visitors drag the 3D carousel
+(or use the arrow buttons) and tap the front window to view it full size.
+
 ## 2. Run it locally
 
 ```bash

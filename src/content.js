@@ -1,139 +1,171 @@
 /**
  * ─────────────────────────────────────────────────────────────
  *  EDIT THIS FILE — it is the only place your details live.
- *  Everything below is SAMPLE content. Replace it with your own.
  *  The 3D card, the "Save contact" file, the page title and the
  *  QR code are all generated from these values.
  * ─────────────────────────────────────────────────────────────
  */
 
 export const profile = {
-  firstName: 'Jordan',
-  lastName: 'Reyes',
+  firstName: 'John Harold',
+  lastName: 'Mito',
 
   // Long version for the page, short version for the printed/3D card.
-  role: 'Product designer & front-end developer',
-  shortRole: 'Designer & Developer',
-  company: 'Independent',
+  role: 'Full-stack web developer & DevOps',
+  shortRole: 'Full-stack Developer',
+  company: 'Civil Aviation Authority of the Philippines',
 
-  location: 'Lisbon, Portugal',
+  location: 'Philippines',
   // IANA time zone, used for the "local time" in the footer. Set to null to hide it.
-  timeZone: 'Europe/Lisbon',
+  timeZone: 'Asia/Manila',
 
-  email: 'hello@example.com',
-  phone: '+1 555 0100',
-  // The public address of this site once it is online. Used for the QR codes.
-  // GitHub Pages: 'https://your-username.github.io/' (repo named your-username.github.io)
-  //           or  'https://your-username.github.io/portfolio/' (repo named portfolio)
+  email: 'mitoharold@gmail.com',
+  // Optional. Leave empty ('') to hide every "Call" button and the number on the card.
+  phone: '',
+  // The public address of this site. Used for the QR codes.
   website: 'https://johnharoldm.github.io/portfolio/',
 
   availability: {
     open: true,
-    short: 'Available',
-    long: 'Taking new projects from Jan 2027',
+    short: 'Freelance',
+    long: 'Open to freelance projects',
   },
 
   // One sentence under your name in the hero.
   intro:
-    'I design and build calm, useful software for teams who care about the details. Working worldwide.',
+    'I build and run internal systems for Philippine civil aviation, and take on freelance web projects on the side.',
 
   // The big "About" statement. Wrap words in *asterisks* to highlight them.
   statement:
-    'I turn fuzzy ideas into *clear, considered products* — from the first sketch to the *shipped code*, with nothing lost in between.',
+    'I build *systems people rely on every day* — then run the *servers, pipelines and monitoring* that keep them up.',
 
   metaDescription:
-    'Portfolio of Jordan Reyes, product designer and front-end developer. Selected work, services and contact details.',
+    'Portfolio of John Harold Mito, full-stack web developer and DevOps in the Philippines. Laravel, React, CI/CD and server infrastructure.',
 
   // Shown in "Save contact" as a note.
-  vcardNote: 'Met in person — portfolio: https://johnharoldm.github.io/portfolio/',
+  vcardNote: 'Portfolio: https://johnharoldm.github.io/portfolio/',
 
   socials: [
-    { label: 'LinkedIn', handle: '/in/your-handle', url: 'https://www.linkedin.com/in/your-handle' },
-    { label: 'GitHub', handle: '@your-handle', url: 'https://github.com/your-handle' },
-    { label: 'Instagram', handle: '@your-handle', url: 'https://www.instagram.com/your-handle' },
-    { label: 'Dribbble', handle: '@your-handle', url: 'https://dribbble.com/your-handle' },
+    { label: 'GitHub', handle: '@johnHaroldM', url: 'https://github.com/johnHaroldM' },
+    // Add LinkedIn here once you want it on the page:
+    // { label: 'LinkedIn', handle: '/in/your-handle', url: 'https://www.linkedin.com/in/your-handle' },
   ],
 }
 
+// Newest first — the "Selected work" header reads the year range from the first and last items.
+//
+// Screenshots: put the image files in public/screens/ and list them under `screens`.
+// Each entry is a path, or { src, caption } to add a short caption:
+//   screens: ['screens/asad-portal-1.webp', { src: 'screens/asad-portal-2.webp', caption: 'Report form' }]
+// The 3D "Screens" section appears automatically once any project has one.
 export const projects = [
   {
-    title: 'Tideline',
-    kind: 'Mobile banking',
+    title: 'Safety Reporting Portal',
+    kind: 'Aviation safety · CAAP',
     year: '2026',
     summary:
-      'Rebuilt onboarding for a regional bank. Fewer screens, plain language, and a sign-up flow people actually finish.',
-    tags: ['Product design', 'iOS', 'Research'],
-    url: 'https://example.com/tideline',
+      'New version of the ASAD safety reporting portal. Built in Laravel and shipped to two production servers through a one-click GitHub Actions deploy.',
+    tags: ['Laravel', 'GitHub Actions', 'Nginx'],
+    screens: [],
   },
   {
-    title: 'Northwind Atlas',
-    kind: 'Analytics platform',
+    title: 'Document Tracking System',
+    kind: 'Government workflow · CAAP',
+    year: '2026',
+    summary:
+      'Follows documents as they move between offices and people, all under one searchable reference ID from the office that started it.',
+    tags: ['Laravel', 'Livewire'],
+    screens: [],
+  },
+  {
+    title: 'CAAP Internal Systems',
+    kind: 'Agency apps · CAAP',
+    year: '2026',
+    summary:
+      'Inspectors Management, Dangerous Goods bulk upload, ELP licensing appointments and the DG monthly report upload — built, deployed and maintained end to end.',
+    tags: ['Laravel', 'CI/CD', 'Linux'],
+    screens: [],
+  },
+  {
+    title: 'SAST-AI-Detection',
+    kind: 'Security tooling · Open source',
+    year: '2026',
+    summary:
+      'Triage for static code-analysis findings. A Rubix ML model ranks each one, then two local LLMs — attacker and defender — weigh in. Human review stays the final word.',
+    tags: ['Laravel', 'Rubix ML', 'Ollama'],
+    screens: [],
+    url: 'https://github.com/johnHaroldM/SAST-AI-Detection',
+  },
+  {
+    title: 'Server Monitoring Stack',
+    kind: 'Infrastructure',
+    year: '2026',
+    summary:
+      'One place to watch every server: metrics, logs and traces in Grafana, Loki, Tempo and Mimir, fed by OpenTelemetry collectors. Built to catch things like failed SSH logins.',
+    tags: ['Grafana', 'OpenTelemetry', 'Docker'],
+    screens: [],
+  },
+  {
+    title: 'CAAP Website',
+    kind: 'Government website · WordPress',
+    year: '2026',
+    summary:
+      'Production fixes and homepage work on caap.gov.ph, built on the Government Website Template — announcements, news, an area-centre map and services.',
+    tags: ['WordPress', 'PHP', 'JavaScript'],
+    screens: [],
+    url: 'https://caap.gov.ph',
+  },
+  {
+    title: 'Invoice Management System',
+    kind: 'Freelance · FlightAxis',
     year: '2025',
-    summary:
-      'A dashboard for logistics teams that turns thousands of shipments into three decisions a day.',
-    tags: ['Data viz', 'React', 'Design system'],
-    url: 'https://example.com/atlas',
-  },
-  {
-    title: 'Field Notes',
-    kind: 'Brand & website',
-    year: '2025',
-    summary:
-      'Identity, type system and a WebGL-driven site for an architecture studio that wanted to feel like their buildings.',
-    tags: ['Branding', 'Three.js', 'Art direction'],
-    url: 'https://example.com/field-notes',
-  },
-  {
-    title: 'Kiln',
-    kind: 'Design system',
-    year: '2024',
-    summary:
-      'Tokens, components and documentation shared by four product teams — one source of truth from Figma to code.',
-    tags: ['Systems', 'TypeScript', 'Docs'],
-    url: 'https://example.com/kiln',
-  },
-  {
-    title: 'Open Pantry',
-    kind: 'Non-profit app',
-    year: '2023',
-    summary:
-      'Volunteer scheduling for a food bank network, designed for shared phones and patchy signal.',
-    tags: ['Pro bono', 'PWA', 'Accessibility'],
-    url: 'https://example.com/open-pantry',
+    summary: 'A custom invoice management system built for an aviation-sector accounting firm.',
+    tags: ['Freelance', 'Laravel', 'MySQL'],
+    screens: [],
   },
 ]
 
 export const capabilities = [
   {
-    title: 'Product design',
-    text: 'Research, flows, interface and prototypes that hold up when real people use them.',
-    tools: ['Figma', 'Prototyping', 'User testing'],
+    title: 'Full-stack web apps',
+    text: 'Business systems from database to UI — forms, workflows, reports and bulk uploads that hold up in daily use.',
+    tools: ['Laravel', 'React', 'MySQL', 'WordPress'],
   },
   {
-    title: 'Front-end engineering',
-    text: 'Fast, accessible interfaces in React and TypeScript, built to be maintained.',
-    tools: ['React', 'TypeScript', 'Tailwind'],
+    title: 'DevOps & CI/CD',
+    text: 'Automated deploys with GitHub Actions and self-hosted runners, plus the Nginx, SSL and release scripts behind them.',
+    tools: ['GitHub Actions', 'Nginx', 'Bash'],
   },
   {
-    title: 'Brand & identity',
-    text: 'Logos, type and colour systems that work as well in print as they do on screen.',
-    tools: ['Identity', 'Typography', 'Print'],
+    title: 'Servers & monitoring',
+    text: 'Linux and Windows servers, on-prem and in the cloud, watched by a Grafana observability stack.',
+    tools: ['Ubuntu Server', 'Docker', 'Grafana', 'OpenTelemetry'],
   },
   {
-    title: 'Creative development',
-    text: '3D, motion and interactive moments that make a product memorable, without slowing it down.',
-    tools: ['Three.js', 'WebGL', 'Motion'],
+    title: 'Applied AI',
+    text: 'Local LLMs and ML models wired into real apps — running on our own hardware, so the data stays in-house.',
+    tools: ['Ollama', 'Rubix ML', 'Local LLMs'],
   },
 ]
 
 export const experience = [
-  { period: '2024 — Now', role: 'Designer & Developer', company: 'Independent' },
-  { period: '2021 — 2024', role: 'Senior Product Designer', company: 'Northwind' },
-  { period: '2018 — 2021', role: 'Front-end Developer', company: 'Studio Parallel' },
-  { period: '2016 — 2018', role: 'Junior Designer', company: 'Paper Plane Agency' },
+  { period: 'Apr 2026 — Now', role: 'Web Developer', company: 'Civil Aviation Authority of the Philippines' },
+  { period: '2025 — Now', role: 'Freelance Web Developer', company: 'FlightAxis' },
+]
+
+export const education = [
+  { period: 'In progress', role: 'Master in Information Technology', company: 'Graduate studies' },
+  { period: 'Completed', role: 'BS Information Technology', company: 'Adamson University' },
 ]
 
 // Derived helpers — no need to edit.
+export const screens = projects.flatMap((p) =>
+  (p.screens ?? []).map((entry) => {
+    const { src, caption = '' } = typeof entry === 'string' ? { src: entry } : entry
+    return { src, caption, title: p.title, kind: p.kind, alt: `${p.title} screenshot${caption ? `: ${caption}` : ''}` }
+  }),
+)
+export const hasScreens = screens.length > 0
 export const fullName = `${profile.firstName} ${profile.lastName}`.trim()
 export const initials = `${profile.firstName[0] ?? ''}${profile.lastName[0] ?? ''}`.toUpperCase()
 export const siteHost = profile.website.replace(/^https?:\/\//, '').replace(/\/$/, '')

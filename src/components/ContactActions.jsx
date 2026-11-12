@@ -20,14 +20,19 @@ export function ContactActions({ id }) {
         <ContactAdd />
         Save contact
       </button>
-      <a href={`mailto:${profile.email}`} className={`${pill} border border-line hover:border-ink`}>
+      <a
+        href={`mailto:${profile.email}`}
+        className={`${pill} border border-line hover:border-ink ${profile.phone ? '' : 'col-span-2'}`}
+      >
         <Mail />
         Email
       </a>
-      <a href={telHref} className={`${pill} border border-line hover:border-ink`}>
-        <Phone />
-        Call
-      </a>
+      {profile.phone && (
+        <a href={telHref} className={`${pill} border border-line hover:border-ink`}>
+          <Phone />
+          Call
+        </a>
+      )}
     </div>
   )
 }

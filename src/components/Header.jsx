@@ -1,4 +1,4 @@
-import { profile, fullName, initials } from '../content.js'
+import { profile, fullName, initials, hasScreens } from '../content.js'
 import { container } from './ui.jsx'
 
 export function Availability({ className = '' }) {
@@ -20,6 +20,7 @@ export function Availability({ className = '' }) {
 
 const links = [
   { href: '#work', label: 'Work' },
+  ...(hasScreens ? [{ href: '#screens', label: 'Screens' }] : []),
   { href: '#about', label: 'About' },
   { href: '#contact', label: 'Contact' },
 ]

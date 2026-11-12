@@ -109,7 +109,7 @@ function drawFront() {
   ctx.textAlign = 'left'
   ctx.fillText(profile.email, P, TH - P - 6)
   ctx.textAlign = 'right'
-  ctx.fillText(profile.phone, TW - P, TH - P - 6)
+  ctx.fillText(profile.phone || '', TW - P, TH - P - 6)
 
   return canvas
 }
@@ -167,7 +167,7 @@ function drawBack() {
 
   ctx.font = `500 34px ${MONO}`
   track(ctx, 3)
-  ctx.fillText(profile.phone, P, P + 222)
+  ctx.fillText(profile.phone || '', P, P + 222)
 
   // Bottom-right URL
   ctx.textAlign = 'right'

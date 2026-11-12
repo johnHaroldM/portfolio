@@ -1,35 +1,14 @@
-import { Component, Suspense, lazy, useState } from 'react'
+import { Suspense, lazy, useState } from 'react'
 import { profile, fullName, initials, siteHost } from '../content.js'
 import { useInView } from '../lib/hooks.js'
 import { ContactActions } from './ContactActions.jsx'
+import { SceneBoundary, hasWebGL } from './SceneBoundary.jsx'
 import { Rotate } from './Icons.jsx'
 import { container } from './ui.jsx'
 
 // Three.js is loaded only after the text is on screen, so the page is
 // readable instantly on a phone that just scanned the card.
 const CardScene = lazy(() => import('../three/CardScene.jsx'))
-
-const hasWebGL = () => {
-  try {
-    const c = document.createElement('canvas')
-    return !!(window.WebGLRenderingContext && (c.getContext('webgl2') || c.getContext('webgl')))
-  } catch {
-    return false
-  }
-}
-
-class SceneBoundary extends Component {
-  state = { failed: false }
-  static getDerivedStateFromError() {
-    return { failed: true }
-  }
-  componentDidCatch(error) {
-    console.warn('3D card unavailable, showing the flat card instead.', error)
-  }
-  render() {
-    return this.state.failed ? null : this.props.children
-  }
-}
 
 /** Plain-CSS stand-in shown while the 3D card loads (or if WebGL is off). */
 function FlatCard({ hidden }) {

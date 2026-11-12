@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { profile, fullName } from '../content.js'
+import { profile, fullName, hasScreens } from '../content.js'
 import { copyText, useFlash } from '../lib/hooks.js'
 import { downloadVCard } from '../lib/vcard.js'
 import { telHref } from './ContactActions.jsx'
@@ -58,7 +58,7 @@ export function Contact() {
     >
       <div className={`${container} pt-16 pb-8 lg:pt-28`}>
         <Reveal as="p" className="font-mono text-[12px] tracking-[0.14em] uppercase opacity-80">
-          (03) Contact
+          ({hasScreens ? '04' : '03'}) Contact
         </Reveal>
 
         <Reveal
@@ -66,9 +66,9 @@ export function Contact() {
           id="contact-title"
           className="mt-6 text-[clamp(3.2rem,14vw,10.5rem)] leading-[0.84] font-bold tracking-[-0.05em]"
         >
-          Let’s make
+          Let’s build
           <br />
-          <span className="font-light">something good.</span>
+          <span className="font-light">something solid.</span>
         </Reveal>
 
         <div className="mt-14 grid grid-cols-1 gap-14 lg:mt-20 lg:grid-cols-12 lg:gap-10">
@@ -82,9 +82,11 @@ export function Contact() {
               </span>
               <ArrowRight className="hidden size-[0.8em] shrink-0 -rotate-45 transition-transform duration-500 ease-out-expo group-hover:rotate-0 sm:block" />
             </a>
-            <a href={telHref} className="mt-3 block text-[clamp(1.1rem,3vw,1.5rem)] font-medium opacity-85 hover:opacity-100">
-              {profile.phone}
-            </a>
+            {profile.phone && (
+              <a href={telHref} className="mt-3 block text-[clamp(1.1rem,3vw,1.5rem)] font-medium opacity-85 hover:opacity-100">
+                {profile.phone}
+              </a>
+            )}
 
             <div className="mt-8 flex flex-wrap gap-2.5">
               <button type="button" onClick={onCopy} className={chip}>

@@ -51,9 +51,11 @@ export function MobileDock() {
         <a href={`mailto:${profile.email}`} aria-label="Email" className={icon}>
           <Mail />
         </a>
-        <a href={telHref} aria-label="Call" className={icon}>
-          <Phone />
-        </a>
+        {profile.phone && (
+          <a href={telHref} aria-label="Call" className={icon}>
+            <Phone />
+          </a>
+        )}
       </div>
     </div>
   )

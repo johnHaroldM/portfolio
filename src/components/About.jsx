@@ -1,12 +1,38 @@
-import { profile, capabilities, experience } from '../content.js'
+import { profile, capabilities, experience, education, hasScreens } from '../content.js'
 import { Emphasis, Reveal, SectionHeading, container } from './ui.jsx'
 
 const pad = (n) => String(n).padStart(2, '0')
 
+function Timeline({ title, items, className = '' }) {
+  return (
+    <div className={className}>
+      <Reveal as="h3" className="font-mono text-[12px] tracking-[0.14em] text-muted uppercase">
+        {title}
+      </Reveal>
+      <ol className="mt-6 border-b border-line">
+        {items.map((e, i) => (
+          <Reveal
+            as="li"
+            key={e.period + e.role}
+            delay={i * 60}
+            className="grid grid-cols-[7.5rem_1fr] gap-4 border-t border-line py-5"
+          >
+            <span className="pt-0.5 font-mono text-[12px] text-muted">{e.period}</span>
+            <span>
+              <span className="block font-semibold tracking-[-0.01em]">{e.role}</span>
+              <span className="block text-muted">{e.company}</span>
+            </span>
+          </Reveal>
+        ))}
+      </ol>
+    </div>
+  )
+}
+
 export function About() {
   return (
     <section id="about" aria-labelledby="about-title" className={`${container} scroll-mt-6 py-16 lg:py-28`}>
-      <SectionHeading id="about-title" index="02" title="About" />
+      <SectionHeading id="about-title" index={hasScreens ? '03' : '02'} title="About" />
 
       <Reveal
         as="p"
@@ -37,25 +63,8 @@ export function About() {
         </div>
 
         <div className="lg:col-span-4 lg:col-start-9">
-          <Reveal as="h3" className="font-mono text-[12px] tracking-[0.14em] text-muted uppercase">
-            Experience
-          </Reveal>
-          <ol className="mt-6 border-b border-line">
-            {experience.map((e, i) => (
-              <Reveal
-                as="li"
-                key={e.period + e.company}
-                delay={i * 60}
-                className="grid grid-cols-[7.5rem_1fr] gap-4 border-t border-line py-5"
-              >
-                <span className="pt-0.5 font-mono text-[12px] text-muted">{e.period}</span>
-                <span>
-                  <span className="block font-semibold tracking-[-0.01em]">{e.role}</span>
-                  <span className="block text-muted">{e.company}</span>
-                </span>
-              </Reveal>
-            ))}
-          </ol>
+          <Timeline title="Experience" items={experience} />
+          {education?.length > 0 && <Timeline title="Education" items={education} className="mt-14" />}
         </div>
       </div>
     </section>

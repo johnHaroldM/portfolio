@@ -3,6 +3,7 @@ import { Contact } from './components/Contact.jsx'
 import { Header } from './components/Header.jsx'
 import { Hero } from './components/Hero.jsx'
 import { MobileDock } from './components/MobileDock.jsx'
+import { Screens } from './components/Screens.jsx'
 import { Work } from './components/Work.jsx'
 
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
       <main>
         <Hero />
         <Work />
+        <Screens />
         <About />
       </main>
       <Contact />
