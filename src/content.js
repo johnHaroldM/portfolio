@@ -66,7 +66,11 @@ export const projects = [
     summary:
       'New version of the ASAD safety reporting portal. Built in Laravel and shipped to two production servers through a one-click GitHub Actions deploy.',
     tags: ['Laravel', 'GitHub Actions', 'Nginx'],
-    screens: [],
+    screens: [
+      { src: 'screens/safety-portal-1.webp', caption: 'Wildlife strike dashboard' },
+      { src: 'screens/safety-portal-2.webp', caption: 'Report list' },
+      { src: 'screens/safety-portal-3.webp', caption: 'Report form' },
+    ],
   },
   {
     title: 'Document Tracking System',
@@ -75,7 +79,11 @@ export const projects = [
     summary:
       'Follows documents as they move between offices and people, all under one searchable reference ID from the office that started it.',
     tags: ['Laravel', 'Livewire'],
-    screens: [],
+    screens: [
+      { src: 'screens/dts-1.webp', caption: 'Office dashboard' },
+      { src: 'screens/dts-2.webp', caption: 'Incoming records' },
+      { src: 'screens/dts-3.webp', caption: 'Routing a document' },
+    ],
   },
   {
     title: 'CAAP Internal Systems',
@@ -84,7 +92,12 @@ export const projects = [
     summary:
       'Inspectors Management, Dangerous Goods bulk upload, ELP licensing appointments and the DG monthly report upload — built, deployed and maintained end to end.',
     tags: ['Laravel', 'CI/CD', 'Linux'],
-    screens: [],
+    screens: [
+      { src: 'screens/inspectors-1.webp', caption: 'Inspector register overview' },
+      { src: 'screens/inspectors-2.webp', caption: 'Inspector authorizations' },
+      { src: 'screens/dangerous-goods-1.webp', caption: 'Dangerous goods dashboard' },
+      { src: 'screens/dangerous-goods-2.webp', caption: 'Dangerous goods reports' },
+    ],
   },
   {
     title: 'SAST-AI-Detection',
@@ -93,7 +106,11 @@ export const projects = [
     summary:
       'Triage for static code-analysis findings. A Rubix ML model ranks each one, then two local LLMs — attacker and defender — weigh in. Human review stays the final word.',
     tags: ['Laravel', 'Rubix ML', 'Ollama'],
-    screens: [],
+    screens: [
+      { src: 'screens/sast-1.webp', caption: 'Findings ranked by the model' },
+      { src: 'screens/sast-2.webp', caption: 'Triage queue' },
+      { src: 'screens/sast-3.webp', caption: 'Noisy rule ranking' },
+    ],
     url: 'https://github.com/johnHaroldM/SAST-AI-Detection',
   },
   {
@@ -112,7 +129,9 @@ export const projects = [
     summary:
       'Production fixes and homepage work on caap.gov.ph, built on the Government Website Template — announcements, news, an area-centre map and services.',
     tags: ['WordPress', 'PHP', 'JavaScript'],
-    screens: [],
+    screens: [
+      { src: 'screens/caap-website-1.webp', caption: 'Public homepage' },
+    ],
     url: 'https://caap.gov.ph',
   },
   {
